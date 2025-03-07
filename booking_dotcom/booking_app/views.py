@@ -69,9 +69,11 @@ class BookInventory(APIView):
                 return Response({"error": "Member has reached max bookings"}, status=status.HTTP_400_BAD_REQUEST)
 
             if inventory.remaining_count >= quantity:
-                Booking.objects.create(member=user, inventory=inventory, booking_date=datetime.datetime.now())
+                Booking.objects.create(member=user,member_name=user.name, inventory=inventory, booking_date=datetime.datetime.now())
                 inventory.remaining_count -= quantity
                 inventory.save()
+                user.booking_count += quantity
+                user.save()
                 return Response({"message": "Booking successful"}, status=status.HTTP_201_CREATED)
             else:
                 return Response({"error": "Not enough inventory available"}, status=status.HTTP_400_BAD_REQUEST)

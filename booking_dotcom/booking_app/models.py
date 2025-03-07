@@ -25,6 +25,7 @@ class Inventory(models.Model):
 
 class Booking(models.Model):
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    member_name = models.CharField(max_length=50)
     inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)
     booking_date = models.DateTimeField(auto_now_add=True)
 
